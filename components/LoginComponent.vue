@@ -11,6 +11,7 @@
           required
           class="w-full relative h-10 border-solid border border-gray-200 rounded-full pl-5"
           placeholder="Email address"
+          v-model="email"
         />
       </div>
       <div>
@@ -23,13 +24,17 @@
           required
           class="w-full relative h-10 border-solid border border-gray-200 rounded-full pl-5"
           placeholder="Password"
+          v-model="password"
         />
       </div>
     </div>
 
     <div class="flex items-center justify-between mt-5">
       <button
-        type="submit"
+        @click="postLogin({
+          email,
+          password
+        }) "
         class="rounded-full group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -37,9 +42,22 @@
         LOG IN
       </button>
     </div>
+  <ErrorFloatComponent :message="this.$store.state.error && this.$store.state.error.message" />
+  {{this.$store.state.error && this.$store.state.error.message}}
   </div>
 </template>
 <script>
-export default {};
+import { mapActions } from 'vuex';
+export default {
+  data() {
+    return {
+      email: "",
+      password: ""
+    }
+  },
+  methods: {  
+    ...mapActions(["postLogin"])
+  },
+};
 </script>
 <style></style>

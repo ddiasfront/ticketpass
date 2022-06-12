@@ -7,7 +7,6 @@
 </template>
 <script>
 export default {
-    
   async asyncData(params) {
     const event = await fetch(
       `http://localhost:8000/api/events/${params.params.slug}`

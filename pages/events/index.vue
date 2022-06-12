@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <ul v-for="event in events.data" :key="event.id">
       <NuxtLink :to="`events/${event.id}`">
         <li>{{ event.name }}</li>
@@ -8,13 +8,12 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
-    
   async asyncData() {
-    const events = await fetch(
-      'http://localhost:8000/api/events'
-    ).then((res) => res.json())
-    return { events }
-  }
-}
-</script>   
+    const api = "http://localhost:8000/api/events";
+    const events = await axios.get(api).then((events) => events.data);
+    return { events };
+  },
+};
+</script>
