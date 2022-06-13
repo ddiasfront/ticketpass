@@ -42,8 +42,7 @@
         LOG IN
       </button>
     </div>
-  <ErrorFloatComponent :message="this.$store.state.error && this.$store.state.error.message" />
-  {{this.$store.state.error && this.$store.state.error.message}}
+  <ErrorFloatComponent v-if="!this.$store.state.login.access_token" :message="this.$store.state.error && this.$store.state.error.message" />
   </div>
 </template>
 <script>
