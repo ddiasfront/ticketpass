@@ -19,6 +19,7 @@ export const actions = {
       try {
         await axios.post(api, loginPayload).then(response => {
           commit("addPost", response);
+          localStorage.isLoggedIn = response.data.access_token;
           return response;
         });
       } catch (e) {
