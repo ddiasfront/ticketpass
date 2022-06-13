@@ -34,7 +34,7 @@
       <!-- DESKTOP/PAD MENU -->
       {{this.$store.state.login.access_token}}
       <div class="hidden sm:flex items-center">
-        <div class="w-40 mr-2" v-if="this.$store.state.login.access_token">
+        <div class="w-40 mr-2" v-if="isLoggedIn">
           <button
             @click=""
             class="rounded-full group relative w-full flex justify-center py-2 px-6 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600"
@@ -48,7 +48,7 @@
                     @click=""
                     class="rounded-full group relative w-full flex justify-center py-2 px-6 border border-transparent text-sm font-medium rounded-md bg-white hover:bg-grey-500 text-black border border-black"
                 >
-                    {{this.$store.state.login.access_token ? 'LOG OUT' : 'LOG IN'}}
+                    {{isLoggedIn ? 'LOG OUT' : 'LOG IN'}}
                 </button>
           </NuxtLink>
         </div>
