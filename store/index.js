@@ -2,7 +2,10 @@ import axios from "axios";
 
 export const state = () => ({
   login: {},
-  error: {}
+  error: {},
+  events: {},
+  eventsmeta: {},
+  errorEvents: {}
 });
 
 export const getters = {};
@@ -23,10 +26,23 @@ export const actions = {
           return response;
         });
       } catch (e) {
-        console.log(e.response.data, 'error');
         commit("errorPost", e.response.data);
         return e.response.data;
       }
+    }
+  },
+  async getEventsByPage({ commit, state }, payload) {
+    console.log('events by page')
+    const api = payload ? payload : "http://localhost:8000/api/events";
+    try {
+      await axios.get(api).then(response => {
+        console.log(response)
+        commit("addEvents", response.data);
+        return response;
+      });
+    } catch (e) {
+      commit("errorEvents", e.response.data);
+      return e.response.data;
     }
   },
 };
@@ -37,5 +53,12 @@ export const mutations = {
   },
   errorPost(state, e) {
     state.error = { ...e };
+  },
+  addEvents(state, response) {
+    state.events = { ...response };
+    state.eventsmeta = {...response.meta}
+  },
+  errorEvents(state, e) {
+    state.errorEvents= { ...e };
   },
 };
