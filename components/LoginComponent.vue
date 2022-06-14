@@ -31,32 +31,36 @@
 
     <div class="flex items-center justify-between mt-5">
       <button
-        @click="postLogin({
-          email,
-          password
-        }) "
+        @click="
+          postLogin({
+            email,
+            password,
+          })
+        "
         class="rounded-full group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
-        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-        </span>
+        <span class="absolute left-0 inset-y-0 flex items-center pl-3"> </span>
         LOG IN
       </button>
     </div>
-    {{this.$store.state.login.access_token}}
-  <ErrorFloatComponent v-if="!this.$store.state.login.access_token" :message="this.$store.state.error && this.$store.state.error.message" />
+    {{ this.$store.state.login.access_token }}
+    <ErrorFloatComponent
+      v-if="!this.$store.state.login.access_token"
+      :message="this.$store.state.error && this.$store.state.error.message"
+    />
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       email: "",
-      password: ""
-    }
+      password: "",
+    };
   },
-  methods: {  
-    ...mapActions(["postLogin"])
+  methods: {
+    ...mapActions(["postLogin"]),
   },
 };
 </script>
