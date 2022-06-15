@@ -11,6 +11,10 @@
             id="name"
             v-model="form.eventName"
           />
+          <span>
+
+        {{this.$store.state.createdEvent.errors && this.$store.state.createdEvent.errors.name}}
+          </span>
         </div>
         <div class="p-2 col-span-2 sm:col-span-1">
           <label class="form-label" for="startDate"> Start Date </label>
@@ -21,6 +25,10 @@
             id="startDate"
             v-model="form.startDate"
           />
+          <span>
+
+        {{this.$store.state.createdEvent.errors && this.$store.state.createdEvent.errors.startDate}}
+          </span>
         </div>
         <div class="p-2 col-span-2 sm:col-span-1">
           <label class="form-label" for="endDate"> End Date </label>
@@ -31,6 +39,8 @@
             id="endDate"
             v-model="form.endDate"
           />
+
+        {{this.$store.state.createdEvent.errors && this.$store.state.createdEvent.errors.endDate}}
         </div>
         <div class="col-span-2 p-2">
           <label class="form-label" for="description">
@@ -43,6 +53,8 @@
             id="description"
             v-model="form.description"
           ></textarea>
+
+        {{this.$store.state.createdEvent.errors && this.$store.state.createdEvent.errors.description}}
         </div>
         <div class="p-2">
           <input
@@ -56,7 +68,7 @@
     </form>
     <div class="col-span-2">
       <button
-        @click="this.submitForm"
+        @click="createEvent(form)"
         class="rounded-full group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
         SUBMIT
@@ -65,6 +77,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -78,6 +91,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["createEvent"]),
     async selectFile(e) {
       const file = e.target.files[0];
       debugger;

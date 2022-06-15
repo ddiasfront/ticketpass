@@ -5,7 +5,9 @@ export const state = () => ({
   error: {},
   events: {},
   eventsmeta: {},
-  errorEvents: {}
+  errorEvents: {},
+  createdEvent: {},
+  errorCreatedEvent: {}
 });
 
 export const getters = {};
@@ -45,6 +47,30 @@ export const actions = {
       return e.response.data;
     }
   },
+  async createEvent({ commit, state }, payload) {
+    const createEventPayload = new FormData();
+    createEventPayload.append("name", payload.eventName);
+    createEventPayload.append("description", payload.description);
+    createEventPayload.append("image", payload.eventImage);
+    createEventPayload.append("startDate", payload.startDate);
+    createEventPayload.append("endDate", payload.endDate);
+    console.log('createEvent', createEventPayload)
+    const api = "http://localhost:8000/api/events";
+    try {
+      await axios.post(api, createEventPayload, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.isLoggedIn}`
+        }
+      }).then(response => {
+        console.log(response)
+        commit("createEvent", response.data);
+        return response;
+      });
+    } catch (e) {
+      commit("errorCreateEvent", e.response.data);
+      return e.response.data;
+    }
+  },
 };
 
 export const mutations = {
@@ -60,5 +86,11 @@ export const mutations = {
   },
   errorEvents(state, e) {
     state.errorEvents= { ...e };
+  },
+  createEvent(state, response) {
+    state.createdEvent = { ...response };
+  },
+  errorCreateEvent(state, e) {
+    state.errorCreateEvent= { ...e };
   },
 };
