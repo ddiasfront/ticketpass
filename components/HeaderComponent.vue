@@ -32,20 +32,19 @@
       </div>
 
       <!-- DESKTOP/PAD MENU -->
-      {{this.$store.state.login.access_token}}
       <div class="hidden sm:flex items-center">
         <div class="w-40 mr-2" v-if="isLoggedIn">
-          <button
-            @click=""
+          <NuxtLink
+            to="/createevent"
             class="rounded-full group relative w-full flex justify-center py-2 px-6 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600"
           > 
             CREATE EVENT
-          </button>
+          </NuxtLink>
         </div>
         <div class="w-40">
-            <NuxtLink to="/login">
+            <NuxtLink :to="!isLoggedIn ? '/login': ''">
                 <button
-                    @click=""
+                    @click="logoutFunctionality()"
                     class="rounded-full group relative w-full flex justify-center py-2 px-6 border border-transparent text-sm font-medium rounded-md bg-white hover:bg-grey-500 text-black border border-black"
                 >
                     {{isLoggedIn ? 'LOG OUT' : 'LOG IN'}}
@@ -78,6 +77,8 @@
   </header>
 </template>
 <script>
+
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -91,9 +92,18 @@ export default {
     }
   },
   methods: {
+
+    ...mapActions(["clearLogin"]),
     toogleMobileOpened() {
       this.isMobileOpened = !this.isMobileOpened;
     },
+    logoutFunctionality() {
+      if (localStorage.isLoggedIn) {
+      localStorage.removeItem('isLoggedIn');
+      this.$store.dispatch('clearLogin');
+      this.isLoggedIn = false
+      }
+    }
   },
 };
 </script>

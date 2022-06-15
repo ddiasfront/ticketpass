@@ -32,10 +32,7 @@
     <div class="flex items-center justify-between mt-5">
       <button
         @click="
-          postLogin({
-            email,
-            password,
-          })
+          postLoginAndRedirect()
         "
         class="rounded-full group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
@@ -43,8 +40,7 @@
         LOG IN
       </button>
     </div>
-    {{ this.$store.state.login.access_token }}
-    <ErrorFloatComponent
+    <FloatMessageComponent
       v-if="!this.$store.state.login.access_token"
       :message="this.$store.state.error && this.$store.state.error.message"
     />
@@ -60,7 +56,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["postLogin"]),
+    ...mapActions(["postLogin", "clearLogin"]),
+    async postLoginAndRedirect() {
+      await this.$store.dispatch("postLogin", {
+        email: this.email,
+        password: this.password
+  }).then( () => {
+    if(this.$store.state.login.access_token) {
+      this.$router.push({path: '/events'})
+    }
+  })
+    }
   },
 };
 </script>

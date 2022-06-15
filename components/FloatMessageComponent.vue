@@ -1,7 +1,7 @@
 <template>
   <div class="fixed top-0 right-0 m-6" v-if="message">
     <div
-      class="bg-red-200 text-red-900 rounded-lg shadow-md p-6 pr-10"
+        :class="{'bg-red-200 text-red-900 rounded-lg shadow-md p-6 pr-10': !success, 'bg-green-200 text-green-900 rounded-lg shadow-md p-6 pr-10': success }"
       style="min-width: 240px"
     >
       <button
@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-    props: ['message'],
+    props: ['message', 'success'],
 };
 </script>
 <style></style>

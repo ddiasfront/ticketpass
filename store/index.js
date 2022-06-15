@@ -13,6 +13,9 @@ export const state = () => ({
 export const getters = {};
 
 export const actions = {
+  async clearLogin({commit}) {
+    commit('clearLogin');
+  },
   async postLogin({ commit, state }, payload) {
     if (!state.login.access_token) {
       const loginPayload = new FormData();
@@ -33,12 +36,10 @@ export const actions = {
       }
     }
   },
-  async getEventsByPage({ commit, state }, payload) {
-    console.log('events by page')
+  async getEventsByPage({ commit }, payload) {
     const api = payload ? payload : "http://localhost:8000/api/events";
     try {
       await axios.get(api).then(response => {
-        console.log(response)
         commit("addEvents", response.data);
         return response;
       });
@@ -48,21 +49,13 @@ export const actions = {
     }
   },
   async createEvent({ commit, state }, payload) {
-    const createEventPayload = new FormData();
-    createEventPayload.append("name", payload.eventName);
-    createEventPayload.append("description", payload.description);
-    createEventPayload.append("image", payload.eventImage);
-    createEventPayload.append("startDate", payload.startDate);
-    createEventPayload.append("endDate", payload.endDate);
-    console.log('createEvent', createEventPayload)
     const api = "http://localhost:8000/api/events";
     try {
-      await axios.post(api, createEventPayload, {
+      await axios.post(api, payload, {
         headers: {
           'Authorization': `Bearer ${localStorage.isLoggedIn}`
         }
       }).then(response => {
-        console.log(response)
         commit("createEvent", response.data);
         return response;
       });
@@ -79,6 +72,9 @@ export const mutations = {
   },
   errorPost(state, e) {
     state.error = { ...e };
+  },
+  clearLogin(state) {
+    state.login = {};
   },
   addEvents(state, response) {
     state.events = { ...response };

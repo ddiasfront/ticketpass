@@ -8,7 +8,6 @@
     <div></div>
   </div>
 </template>
-Of
 <script>
 export default {};
 </script>
