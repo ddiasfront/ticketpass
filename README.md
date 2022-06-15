@@ -1,4 +1,10 @@
 # ticketpass
+## routes
+### /INDEX ( EMPTY )
+### /LOGIN ( LOGIN )
+### /EVENTS ( EVENT )
+### /EVENTS/:ID ( EVENT DETAIL )
+### /CREATEEVENT ( CREATE EVENT )
 
 ## Build Setup
 
